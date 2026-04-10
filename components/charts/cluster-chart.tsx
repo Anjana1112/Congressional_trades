@@ -98,7 +98,7 @@ export function ClusterTradingHeatmap() {
 
         const topMembers = [...memberTotals.entries()]
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
+        .slice(0, 8)
         .map(([member]) => ({
             name: member,
             party: memberPartyMap.get(member) ?? null,
@@ -129,44 +129,44 @@ export function ClusterTradingHeatmap() {
     }, [cluster])
 
     return (
-        <Card className="h-full w-full">
-        <CardHeader>
-            <CardTitle>Cluster Trading Heatmap</CardTitle>
-            <CardDescription>
-            Member pairs repeatedly trading the same stock within 7 days
+        <Card className="h-fit rounded-xl border bg-background shadow-sm">
+        <CardHeader className="space-y-1 px-4 py-3">
+            <CardTitle className="text-base">Cluster Trading Heatmap</CardTitle>
+            <CardDescription className="text-xs">
+            Repeated same-stock trades within 7 days
             </CardDescription>
         </CardHeader>
 
-        <CardContent className="h-[calc(100%-88px)]">
+        <CardContent className="px-4 pb-4 pt-0">
             {!cluster || cluster.length === 0 ? (
-            <p className="p-4 text-sm text-muted-foreground">Loading...</p>
+            <p className="text-xs text-muted-foreground">Loading...</p>
             ) : members.length === 0 ? (
-            <p className="p-4 text-sm text-muted-foreground">No results found.</p>
+            <p className="text-xs text-muted-foreground">No results found.</p>
             ) : (
-            <div className="h-full min-w-0">
+            <div className="space-y-3">
                 <div className="overflow-x-auto">
                 <div
-                    className="grid gap-y-1 gap-x-1"
+                    className="grid gap-1"
                     style={{
-                    gridTemplateColumns: `160px repeat(${members.length}, minmax(56px, 1fr))`,
-                    minWidth: `${160 + members.length * 56}px`,
+                    gridTemplateColumns: `110px repeat(${members.length}, 36px)`,
+                    minWidth: `${110 + members.length * 36}px`,
                     }}
                 >
-                    <div className="h-24" />
+                    <div className="h-14" />
 
                     {members.map((member) => (
                     <div
                         key={`col-${member.name}`}
-                        className="flex h-24 items-end justify-center overflow-visible"
+                        className="flex h-14 items-end justify-center overflow-visible"
                     >
                         <div
                         className="origin-bottom-left -rotate-45 whitespace-nowrap"
                         title={member.name}
                         >
-                        <div className="text-xs font-medium text-muted-foreground">
+                        <div className="max-w-20 truncate text-[10px] font-medium text-muted-foreground">
                             {member.name}
                         </div>
-                        <div className="text-[11px] text-muted-foreground/70">
+                        <div className="text-[9px] text-muted-foreground/70">
                             {member.party ?? "-"}
                         </div>
                         </div>
@@ -186,55 +186,30 @@ export function ClusterTradingHeatmap() {
                 </div>
                 </div>
 
-                <div className="mt-4 rounded-md border p-4">
+                <div className="rounded-md border p-3">
                 {hoveredPair ? (
-                    <div className="space-y-3">
-                    <div className="flex items-start justify-between">
-                        <div className="min-w-0">
-                        <div className="truncate font-medium">
-                            {hoveredPair.member_1} ({hoveredPair.party_1 ?? "-"})
-                        </div>
-                        <div className="truncate text-sm text-muted-foreground">
-                            {hoveredPair.member_2} ({hoveredPair.party_2 ?? "-"})
-                        </div>
-                        </div>
-
-                        <div className="text-right text-sm">
-                        <div className="font-medium">
-                            {hoveredPair.clusterCount} overlaps
-                        </div>
-                        <div className="text-muted-foreground">
-                            {hoveredPair.distinctTickers} tickers
-                        </div>
-                        </div>
+                    <div className="space-y-2">
+                    <div className="text-xs font-medium">
+                        {hoveredPair.member_1} ({hoveredPair.party_1 ?? "-"}) &{" "}
+                        {hoveredPair.member_2} ({hoveredPair.party_2 ?? "-"})
                     </div>
 
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                        <span>Avg gap: {hoveredPair.avgDaysApart.toFixed(1)}d</span>
-                        <span>Min gap: {hoveredPair.minDaysApart}d</span>
-                        <span>Same direction: {hoveredPair.sameDirectionCount}</span>
-                        <span>Opposite: {hoveredPair.oppositeDirectionCount}</span>
-                    </div>
-
-                    <div className="mt-2 flex flex-wrap gap-1">
-                        {hoveredPair.sharedTickers.slice(0, 8).map((ticker) => (
-                        <span
-                            key={ticker}
-                            className="rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground"
-                        >
-                            {ticker}
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+                        <span>{hoveredPair.clusterCount} overlaps</span>
+                        <span>{hoveredPair.distinctTickers} tickers</span>
+                        <span>Avg {hoveredPair.avgDaysApart.toFixed(1)}d</span>
+                        <span>Min {hoveredPair.minDaysApart}d</span>
+                        <span className="text-green-600">
+                            ↑ {hoveredPair.sameDirectionCount}
                         </span>
-                        ))}
-                        {hoveredPair.sharedTickers.length > 8 && (
-                        <span className="rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                            +{hoveredPair.sharedTickers.length - 8} more
+                        <span className="text-red-600">
+                            ↓ {hoveredPair.oppositeDirectionCount}
                         </span>
-                        )}
                     </div>
                     </div>
                 ) : (
-                    <p className="text-sm text-muted-foreground">
-                    Hover a cell to inspect a member pair.
+                    <p className="text-xs text-muted-foreground">
+                    Hover a cell to inspect a pair.
                     </p>
                 )}
                 </div>
@@ -243,17 +218,17 @@ export function ClusterTradingHeatmap() {
         </CardContent>
         </Card>
     )
-    }
+}
 
-    type FragmentRowProps = {
+type FragmentRowProps = {
     rowMember: MemberLabel
     members: MemberLabel[]
     matrix: Map<string, PairSummary>
     maxCount: number
     setHoveredPair: React.Dispatch<React.SetStateAction<PairSummary | null>>
-    }
+}
 
-    function FragmentRow({
+function FragmentRow({
     rowMember,
     members,
     matrix,
@@ -262,14 +237,14 @@ export function ClusterTradingHeatmap() {
     }: FragmentRowProps) {
     return (
         <>
-        <div
-            className="flex flex-col justify-center pr-1 text-xs"
+        <div className="flex flex-col justify-center pr-1">
+            <span
+            className="truncate text-[10px] font-medium text-muted-foreground"
             title={rowMember.name}
-        >
-            <span className="truncate font-medium text-muted-foreground">
+            >
             {rowMember.name}
             </span>
-            <span className="truncate text-[11px] text-muted-foreground/70">
+            <span className="truncate text-[9px] text-muted-foreground/70">
             {rowMember.party ?? "-"}
             </span>
         </div>
@@ -279,7 +254,7 @@ export function ClusterTradingHeatmap() {
             return (
                 <div
                 key={`${rowMember.name}-${colMember.name}`}
-                className="flex aspect-square items-center justify-center rounded-md border bg-muted/40 text-[10px] text-muted-foreground"
+                className="flex h-9 w-9 items-center justify-center rounded-sm border bg-muted/40 text-[10px] text-muted-foreground"
                 >
                 —
                 </div>
@@ -300,7 +275,7 @@ export function ClusterTradingHeatmap() {
                 type="button"
                 onMouseEnter={() => setHoveredPair(pair ?? null)}
                 onMouseLeave={() => setHoveredPair(null)}
-                className="flex aspect-square items-center justify-center rounded-md border text-xs font-medium transition-transform hover:scale-[1.03]"
+                className="flex h-9 w-9 items-center justify-center rounded-sm border text-[10px] font-medium"
                 style={{
                 backgroundColor: getHeatColor(count, maxCount),
                 color: getTextColor(count, maxCount),

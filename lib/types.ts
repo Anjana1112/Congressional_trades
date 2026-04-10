@@ -74,6 +74,7 @@ export interface SharpeProxy {
     member: string
     chamber: string
     state: string
+    party: string | null
     avg_trade_size: number
     trade_volatility: number
     total_buys: number

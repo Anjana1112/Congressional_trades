@@ -22,7 +22,7 @@ export function TopMembersBarChart() {
           <CardDescription>Total estimated $ by each congress member</CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={membersConfig} className="h-[350px] w-full">
+          <ChartContainer config={membersConfig} className="h-87.5 w-full">
             <BarChart accessibilityLayer data={data} layout="vertical" margin={{ left: -20 }}>
               <XAxis 
               type="number" 

@@ -64,6 +64,7 @@ export default function DashboardPage() {
             <div className="space-y-6">
               <ClusterTradingHeatmap />
               <SharpeProxyChart />
+              <PreEventTradeChart />
             </div>
 
             <div className="space-y-6">
@@ -74,7 +75,6 @@ export default function DashboardPage() {
             <div className="space-y-6">
               <SellToBuyScatterPlot />
               <ZScoreSpikePlot />
-              <PreEventTradeChart />
             </div>
           </div>
         </section>

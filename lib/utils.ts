@@ -20,18 +20,7 @@ export function getDelayColor(days: number) {
     if (days >= 90) return "#eab308"    // yellow (late)
     return "#3b82f6"                    // blue (mildly late)
 }
-export function getAnomalyColor(score: number) {
-    if (score >= 10) return "#dc2626"
-    if (score >= 6) return "#f97316"   
-    if (score >= 3) return "#eab308"   
-    return "#3b82f6"                  
-}
-export function getRatioColor(ratio: number) {
-    if (ratio >= 3) return "#dc2626" // strong seller
-    if (ratio >= 1.5) return "#f59e0b" // moderately seller-heavy
-    if (ratio >= 0.75) return "#6366f1" // roughly balanced
-    return "#2563eb" // buyer-heavy
-}
+
 export function formatAxisValue(logValue: number) {
     const actualValue = 10 ** logValue
 
@@ -61,18 +50,13 @@ export function isSameDirection(type_1: string, type_2: string) {
     return (isBuy(t1) && isBuy(t2)) || (isSell(t1) && isSell(t2))
 }
 
-export function getHeatColor(count: number, maxCount: number) {
-    if (count === 0 || maxCount === 0) return "rgb(249 250 251)"
+export function getHeatColor(count: number, max: number) {
+  if (count === 0) return "rgba(34, 197, 94, 0.08)" // very light green
 
-    const intensity = count / maxCount
+  const intensity = count / max
 
-    if (intensity >= 0.85) return "rgb(30 64 175)"
-    if (intensity >= 0.65) return "rgb(59 130 246)"
-    if (intensity >= 0.45) return "rgb(96 165 250)"
-    if (intensity >= 0.25) return "rgb(147 197 253)"
-    return "rgb(219 234 254)"
+  return `rgba(34, 197, 94, ${0.2 + intensity * 0.8})`
 }
-
 export function getTextColor(count: number, maxCount: number) {
     if (maxCount === 0) return "#111827"
     return count / maxCount >= 0.65 ? "white" : "#111827"

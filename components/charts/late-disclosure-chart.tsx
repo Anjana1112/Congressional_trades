@@ -75,6 +75,7 @@ export function LateDisclosureScatterPlot() {
     }, [lateDisclosures])
 
     return (
+        
         <Card className="w-full">
         <CardHeader>
             <CardTitle>Late Disclosure Scatter</CardTitle>
@@ -82,8 +83,9 @@ export function LateDisclosureScatterPlot() {
             Each point is a late-reported trade. Higher points indicate longer disclosure delays.
             </CardDescription>
         </CardHeader>
-
-        <CardContent className="h-90">
+        
+        <CardContent>
+            <div className="h-90">
             {chartData.length === 0 ? (
             <p className="text-sm text-muted-foreground">No results found.</p>
             ) : (
@@ -164,6 +166,20 @@ export function LateDisclosureScatterPlot() {
                 </ScatterChart>
             </ResponsiveContainer>
             )}
+            </div>
+            <div className="flex flex-wrap gap-4 mt-3 text-sm">
+                {[
+                    { color: "#3b82f6", label: "46–89 days" },
+                    { color: "#eab308", label: "90–179 days" },
+                    { color: "#f97316", label: "180–364 days" },
+                    { color: "#dc2626", label: "365+ days" },
+                ].map(({ color, label }) => (
+                    <div key={label} className="flex items-center gap-1.5">
+                    <span className="inline-block w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+                    <span className="text-muted-foreground">{label}</span>
+                    </div>
+                ))}
+            </div>
         </CardContent>
         </Card>
     )
