@@ -10,7 +10,6 @@ export async function GET(request: Request) {
         `WITH member_stats AS (
             SELECT
             vd.member,
-            vd.party,
             AVG(vd.amount_mid) AS avg_trade,
             STDDEV(vd.amount_mid) AS stddev_trade
             FROM v_trade_detail vd
