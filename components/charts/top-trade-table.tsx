@@ -6,6 +6,13 @@ import { useData } from "@/app/data-context"
 import { Trade } from "@/lib/types"
 
 export function TopTradesTable() {
+  const formatParty = (party?: string | null) => {
+        if (!party) return "—"
+        if (party.toLowerCase() === "democrat") return "DNC"
+        if (party.toLowerCase() === "republican") return "GOP"
+        return party
+    }
+
     const { trades } = useData()
     const data = [...trades]
       .sort((a: Trade, b: Trade) => Number(b.amount_mid) - Number(a.amount_mid))
@@ -58,7 +65,7 @@ export function TopTradesTable() {
                       <TableCell className="font-medium">
                         {row.member}
                         <div className="flex items-center gap-1 text-xs text-gray-600">
-                                {row.state} | {row.party}
+                                {row.state} | {formatParty(row.party)}
                         </div>
                       </TableCell>
 

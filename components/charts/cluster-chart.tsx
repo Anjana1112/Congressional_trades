@@ -32,6 +32,13 @@ type MemberLabel = {
 }
 
 export function ClusterTradingHeatmap() {
+    const formatParty = (party?: string | null) => {
+        if (!party) return "—"
+        if (party.toLowerCase() === "democrat") return "DNC"
+        if (party.toLowerCase() === "republican") return "GOP"
+        return party
+    }
+
     const { cluster } = useData()
     const [hoveredPair, setHoveredPair] = useState<PairSummary | null>(null)
 
@@ -167,7 +174,7 @@ export function ClusterTradingHeatmap() {
                             {member.name}
                         </div>
                         <div className="text-[9px] text-muted-foreground/70">
-                            {member.party ?? "-"}
+                            {formatParty(member.party) ?? "-"}
                         </div>
                         </div>
                     </div>
