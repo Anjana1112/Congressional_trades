@@ -23,7 +23,7 @@ const TopMembersBarChart = dynamic(
 export default function DashboardPage() {
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
-      <main className="space-y-8 px-6 py-4">
+      <main className="space-y-4 px-6 py-4">
         <div>
             <h2 className="text-2xl font-semibold tracking-tight">
               Dashboard
