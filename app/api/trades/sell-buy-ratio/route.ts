@@ -7,6 +7,7 @@ export async function GET() {
         SELECT
             vs.full_name,
             vs.chamber,
+            vs.party,
             vs.state,
             vs.trade_count,
             vs.total_buys,

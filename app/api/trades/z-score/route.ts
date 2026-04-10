@@ -18,6 +18,7 @@ export async function GET(request: Request) {
         SELECT
             vd.member,
             vd.chamber,
+            vd.party,
             vd.ticker,
             vd.company_name,
             vd.sector,

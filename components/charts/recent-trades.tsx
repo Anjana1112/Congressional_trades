@@ -16,7 +16,7 @@ export function LatestTradesTable() {
         (a: Trade, b: Trade) =>
             new Date(b.trade_date).getTime() - new Date(a.trade_date).getTime()
         )
-        .slice(0, 9)
+        .slice(0, 5)
 
     return (
         <Card className="w-full">

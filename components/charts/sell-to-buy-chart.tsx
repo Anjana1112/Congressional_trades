@@ -107,7 +107,7 @@ export function SellToBuyScatterPlot() {
                     return (
                     <div className="rounded-md border bg-background p-3 shadow-sm text-sm">
                         <div className="font-medium">{d.name}</div>
-
+                        <div className="text-muted-foreground">{d.state} | {d.party || "Unknown Party"} </div>
                         <div>Buys: {formatMoney(d.totalBuys)}</div>
                         <div>Sells: {formatMoney(d.totalSells)}</div>
                         <div>Trades: {d.z}</div>

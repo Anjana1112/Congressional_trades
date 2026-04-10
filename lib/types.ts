@@ -39,6 +39,7 @@ export type Trade = {
 }
 export interface LateDisclosure {
     member: string
+    party: string | null
     chamber: string
     ticker: string
     sector: string | null
@@ -50,6 +51,7 @@ export interface LateDisclosure {
  
 export interface SellBuyRatio {
     full_name: string
+    party: string | null
     chamber: string
     state: string
     trade_count: number
@@ -95,6 +97,7 @@ export interface AlphaProxy {
 export interface ZScore{
     member: string
     chamber: string
+    party: string | null
     ticker: string
     trade_type: string
     trade_date: string
@@ -105,7 +108,9 @@ export interface ZScore{
  
 export interface Cluster {
     member_1: string
+    party_1: string | null
     member_2: string
+    party_2: string | null
     type_1: string
     type_2: string
     ticker: string
@@ -128,4 +133,11 @@ export interface PreEventTrade {
     days_before_event: number
     estimated_value: number
 }
- 
+export interface SectorPreference {
+    party: string
+    committee: string | null
+    sector: string
+    trade_count: number
+    total_invested: number | null
+    members_trading_sector: number
+}

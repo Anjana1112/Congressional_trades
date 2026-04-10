@@ -28,6 +28,7 @@ type ScatterPoint = {
     y: number
     z: number
     member: string
+    party: string | null
     ticker: string
     trade_type: string
     trade_date: string
@@ -56,6 +57,7 @@ export function LateDisclosureScatterPlot() {
             y,
             z: Math.max(6, Math.min(18, y / 120)),
             member: d.member,
+            party: d.party,
             ticker: d.ticker,
             trade_type: d.trade_type,
             trade_date: d.trade_date,
@@ -133,6 +135,9 @@ export function LateDisclosureScatterPlot() {
                         <div className="rounded-lg border bg-background p-3 text-sm shadow-sm">
                         <div className="font-medium">
                             {p.member}: {p.ticker}
+                        </div>
+                        <div className="">
+                            Party: {p.party || "—"}
                         </div>
                         <div className="text-green-600">
                             {p.trade_type}

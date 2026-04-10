@@ -28,6 +28,7 @@ type ZScorePoint = {
     y: number
     z: number
     member: string
+    party: string | null
     ticker: string
     trade_type: string
     trade_date: string
@@ -64,6 +65,7 @@ export function ZScoreSpikePlot() {
             y,
             z: Math.max(80, Math.min(220, y * 10)),
             member: d.member,
+            party: d.party,
             ticker: d.ticker,
             trade_type: d.trade_type,
             trade_date: d.trade_date,
@@ -149,6 +151,7 @@ export function ZScoreSpikePlot() {
                         <div className="font-medium">
                             {p.member}
                         </div>
+                        <div className="text-muted-foreground"> {p.party || "Unknown Party"} </div>
                         <div className="text-muted-foreground">{p.trade_type}: {p.ticker}</div>
                         <div className="mt-2">Trade date: {formatDate(p.trade_date)}</div>
                         <div>Trade size: {formatMoney(p.amount_mid)}</div>

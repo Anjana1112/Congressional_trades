@@ -1,6 +1,6 @@
 "use client"
 
-import { AlphaProxy, LateDisclosure, Member, SectorConcentration, SellBuyRatio, SharpeProxy, Stock, Trade, Cluster, ZScore, PreEventTrade } from "@/lib/types"
+import { AlphaProxy, LateDisclosure, Member, SectorConcentration, SellBuyRatio, SharpeProxy, Stock, Trade, Cluster, ZScore, PreEventTrade, SectorPreference } from "@/lib/types"
 import { createContext, useContext, useEffect, useState } from "react"
 
 interface DataContextType {
@@ -15,7 +15,7 @@ interface DataContextType {
     zScores: ZScore[]   
     alphaProxies: AlphaProxy[]
     cluster: Cluster[]
-    
+    sectorPreferences: SectorPreference[]
 }
 
 const DataContext = createContext<DataContextType>({
@@ -30,6 +30,7 @@ const DataContext = createContext<DataContextType>({
     alphaProxies: [],
     cluster: [],
     preEventTrades: [],
+    sectorPreferences: [],
 })
 export function DataProvider({ children }: { children: React.ReactNode }) {
     const [members, setMembers] = useState<Member[]>([])
@@ -43,6 +44,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     const [cluster, setCluster] = useState<Cluster[]>([])
     const [zScores, setZScores] = useState<ZScore[]>([])
     const [preEventTrades, setPreEventTrades] = useState<PreEventTrade[]>([])
+    const [sectorPreferences, setSectorPreferences] = useState<SectorPreference[]>([])
 
     useEffect(() => {
         fetch("/api/members").then(r => r.json()).then(d => setMembers(Array.isArray(d) ? d : []))
@@ -55,12 +57,15 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         fetch("/api/trades/alpha").then(r => r.json()).then(d => setAlphaProxies(Array.isArray(d) ? d : []))
         fetch("/api/trades/cluster").then(r => r.json()).then(d => setCluster(Array.isArray(d) ? d : []))
         fetch("/api/trades/z-score").then(r => r.json()).then(d => setZScores(Array.isArray(d) ? d : []))
-        fetch("/api/trades/pre-event").then(r => r.json()).then(d => setPreEventTrades(Array.isArray(d) ? d : []))    
+        fetch("/api/trades/pre-event").then(r => r.json()).then(d => setPreEventTrades(Array.isArray(d) ? d : []))
+        fetch("/api/party/sector-preferences").then(r => r.json()).then(d => setSectorPreferences(Array.isArray(d) ? d : []))
     }, [])
 
     return (
         <DataContext.Provider value={{
-            members, stocks, trades, lateDisclosures, sellBuyRatios, sectorConcentration, sharpeProxies, alphaProxies, cluster, zScores, preEventTrades
+            members, stocks, trades, lateDisclosures, sellBuyRatios, sectorConcentration, 
+            sharpeProxies, alphaProxies, cluster, zScores, preEventTrades, 
+            sectorPreferences
         }}>
             {children}
         </DataContext.Provider>
