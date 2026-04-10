@@ -7,7 +7,9 @@ import { Trade } from "@/lib/types"
 
 export function TopTradesTable() {
   const formatParty = (party?: string | null) => {
-        if (!party) return "—"
+        if (!party) {
+          return "-"
+        }
         if (party.toLowerCase() === "democrat") return "DNC"
         if (party.toLowerCase() === "republican") return "GOP"
         return party
