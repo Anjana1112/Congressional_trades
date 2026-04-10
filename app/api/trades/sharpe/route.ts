@@ -15,11 +15,12 @@ export async function GET() {
             SUM(IF(vd.trade_type IN ('sale','sale_partial'), vd.amount_mid, 0)) AS total_sells,
             SUM(IF(vd.trade_type = 'purchase', vd.amount_mid, 0)) AS total_buys
             FROM v_trade_detail vd
-            GROUP BY vd.member, vd.chamber, vd.state
+            GROUP BY vd.member, vd.chamber, vd.party, vd.state
         )
         SELECT
             member,
             chamber,
+            party,
             state,
             ROUND(avg_trade_size, 0) AS avg_trade_size,
             ROUND(stddev_trade_size, 0) AS trade_volatility,
